@@ -2,42 +2,13 @@ import java.util.ArrayList;
 
 public class BaccaratGameLogic {
 	
+	
+	
 	// assuming hand1 = playerHand & hand2 = bankerHand, evaluate two hands at the game, 
 	// return a string of winner
 	public String whoWon(ArrayList<Card> hand1, ArrayList<Card> hand2) {
 		int playerScore = handTotal(hand1);
 		int bankerScore = handTotal(hand2);
-		Card playerThirdCard = null;
-		Card bankerThirdCard = null;
-		
-		// nature win case
-		if ((playerScore == 9 && bankerScore == 9) || (playerScore == 8 && bankerScore == 8)) {
-			return "Draw";
-		}
-		else if (playerScore == 9) {
-			return "Player";
-		}
-		else if (bankerScore == 9) {
-			return "Banker";
-		}
-		else if (playerScore == 8) {
-			return "Player";
-		}
-		else if (bankerScore == 8) {
-			return "Banker";
-		}
-		
-		// unnatural case
-		// check if there is a third card condition
-		if (evaluatePlayerDraw(hand1)) {
-			playerThirdCard = null;   // NEED TO FIX: want to use BaccaratDealer.drawOne()
-									  // should it be static or we just remain there, call BaccaratDealer instance?
-			playerScore = (playerScore + playerThirdCard.value) % 10;
-		}
-		if (evaluateBankerDraw(hand2, playerThirdCard)) {
-			bankerThirdCard = null; 
-			bankerScore = (bankerScore + bankerThirdCard.value) % 10;
-		}
 		
 		// compare the score between player & banker and decide the winner
 		if (playerScore > bankerScore) {

@@ -12,9 +12,19 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
 
 public class BaccaratGame extends Application {
 
+	public ArrayList<Card> playerHand;
+	public ArrayList<Card> bankerHand;
+	public BaccaratDealer theDealer;
+	public BaccaratGameLogic gameLogic;
+	public double currentBet;
+	public double totalWinnings;
+	public double currentMoney; // add this
+	public String userChoice;
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		launch(args);
@@ -57,6 +67,29 @@ public class BaccaratGame extends Application {
 		
 				
 		
+	}
+	
+	
+	// check if the hands are in natural case
+	public boolean checkNatural() {
+		int playerScore = gameLogic.handTotal(playerHand);
+		int bankerScore = gameLogic.handTotal(bankerHand);
+		if (playerScore == 9 || playerScore == 8 || bankerScore == 9 || bankerScore == 8) {
+			return true;
+		}
+		return false;
+	}
+	
+	// determine if the user win or lost their bet and return the amount won or lost based on the value in currentBet
+	public double evaluateWinnings() {
+		String winner = gameLogic.whoWon(playerHand, bankerHand);
+		
+		// decide the money user win or lose
+		if (userChoice == winner) {
+			return currentBet * 2;
+		}
+		
+		return 0;
 	}
 
 }
