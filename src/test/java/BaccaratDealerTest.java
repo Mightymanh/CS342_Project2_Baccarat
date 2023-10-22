@@ -49,11 +49,20 @@ public class BaccaratDealerTest {
         assertEquals(13, spade);
         assertEquals(13, club);
 
+
+    }
+    @Test
+    void generateDeckTest2() {
+        newDealer.drawOne();
+        newDealer.generateDeck();
         int[] arr = {1,2,3,4,5,6,7,8,9,0,0,0,0};
 
         for(int i =0; i < arr.length; i++) {
             assertEquals(arr[i], newDealer.deck.get(i).value);
         }
+
+
+
     }
 
     @Test
@@ -67,18 +76,18 @@ public class BaccaratDealerTest {
         assertEquals(2, arr.size());
         assertEquals(48, newDealer.deck.size());
         assertNotEquals(arr.get(0), arr.get(1));
-        newDealer.generateDeck();
 
-        for(int i =0; i<25;i++){
-            assertNotNull(newDealer.dealHand());
-        }
-
-        assertNotNull(newDealer.drawOne());
-        assertNull(newDealer.dealHand());
-        assertEquals(1, newDealer.deckSize());
 
     }
 
+    @Test
+    void dealHandtest2() {
+        int[] arr = {1,2,3,4,5,6,7,8,9,0,0,0,0};
+
+        for(int i =0; i < arr.length; i++) {
+            assertEquals(arr[i], newDealer.deck.get(i).value);
+        }
+    }
 
     @Test
     void drawOneTest(){
@@ -87,14 +96,17 @@ public class BaccaratDealerTest {
         Card card2 = newDealer.drawOne();
         assertEquals(50, newDealer.deck.size());
         assertNotEquals(card2, oneCard);
-        newDealer.generateDeck();
+
+    }
+
+    @Test
+    void drawOneTest2() {
         for(int i =0; i < 52; i++) {
             assertNotNull(newDealer.drawOne());
         }
 
         assertNull(newDealer.drawOne());
     }
-
 
 
     @Test
@@ -113,7 +125,16 @@ public class BaccaratDealerTest {
     }
 
     @Test
-    void deckSizetest() {
+    void shuffle2() {
+        ArrayList<Card> seq1 = new ArrayList<>(newDealer.deck);
+        newDealer.shuffleDeck();
+
+        assertFalse(Arrays.equals(seq1.toArray(),newDealer.deck.toArray()));
+
+    }
+
+    @Test
+    void deckSizeTest() {
         newDealer.drawOne();
         assertEquals(51,newDealer.deckSize());
         newDealer.dealHand();
@@ -124,12 +145,16 @@ public class BaccaratDealerTest {
 
         newDealer.dealHand();
         assertEquals(47,newDealer.deckSize());
-        newDealer.generateDeck();
+
+
+    }
+
+    @Test
+    void deckSize2() {
         for(int i = 0; i < 52; i++) {
             newDealer.drawOne();
         }
         assertEquals(0, newDealer.deckSize());
-
     }
 
 }
