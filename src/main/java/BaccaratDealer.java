@@ -6,7 +6,7 @@ public class BaccaratDealer {
 
 
     public BaccaratDealer() {
-        deck = new ArrayList<>();
+        this.deck = new ArrayList<>();
     }
     private void generateSuite(String theSuite) {
 
@@ -15,17 +15,17 @@ public class BaccaratDealer {
         for(int i = 0; i < nameList.length;i++) {
             Card newCard = new Card(theSuite, i+1, nameList[i]);
 
-            deck.add(newCard);
+            this.deck.add(newCard);
         }
 
         Card newCard = new Card(theSuite, 0, "Jack");
-        deck.add(newCard);
+        this.deck.add(newCard);
         newCard = new Card(theSuite, 0, "King");
-        deck.add(newCard);
+        this.deck.add(newCard);
         newCard = new Card(theSuite, 0, "Queen");
-        deck.add(newCard);
+        this.deck.add(newCard);
         newCard = new Card(theSuite, 0, "10");
-        deck.add(newCard);
+        this.deck.add(newCard);
     }
     public void generateDeck() {
 
@@ -41,6 +41,9 @@ public class BaccaratDealer {
 
 
     public ArrayList<Card> dealHand() {
+        if(deck.size() < 2) {
+            return null;
+        }
         ArrayList<Card> cards = new ArrayList<>();
         cards.add(deck.remove(deck.size()-1));
         cards.add(deck.remove(deck.size()-1));
@@ -49,11 +52,15 @@ public class BaccaratDealer {
 
 
     public Card drawOne() {
-        return deck.remove(deck.size()-1);
+        if(deckSize() < 1) {
+            return null;
+        }
+        return deck.remove(deck.size()-1
+        );
     }
     public void shuffleDeck() {
         Random randomNumber = new Random();
-
+        randomNumber.setSeed(System.currentTimeMillis());
         for(int i = deck.size()-1;  i > 0; i--) {
             int randIndex =  randomNumber.nextInt(i);
 
