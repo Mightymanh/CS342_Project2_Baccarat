@@ -7,6 +7,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Set;
+import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.*;
 public class BaccaratDealerTest {
@@ -131,6 +133,20 @@ public class BaccaratDealerTest {
 
         assertFalse(Arrays.equals(seq1.toArray(),newDealer.deck.toArray()));
 
+    }
+    
+    @Test
+    void shuffle3() {
+    	// check if the deck after shuffle contains all the cards in default deck
+    	ArrayList<Card> defaultDeck = new ArrayList<>(newDealer.deck);
+    	newDealer.shuffleDeck();
+    	ArrayList<Card> shuffledDeck = new ArrayList<>(newDealer.deck);
+    	int size = defaultDeck.size();
+    	assertEquals(size, shuffledDeck.size(), "shuffle(): the size of shuffled deck is changed");
+    	
+    	Set<Card> defaultSet = new HashSet<>(defaultDeck);
+    	Set<Card> shuffledSet = new HashSet<>(shuffledDeck);
+    	assertTrue(defaultSet.equals(shuffledSet), "shuffle(): the shuffled deck does not contain all cards from the pre-shuffled deck");	
     }
 
     @Test
