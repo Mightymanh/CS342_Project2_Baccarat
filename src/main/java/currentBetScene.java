@@ -77,12 +77,10 @@ public class currentBetScene {
 		numWinField.setEditable(false);
 		
 		// init menu options
-		exit = new MenuItem("Exit");
-		freshStart = new MenuItem("Fresh start");
-		options = new Menu("Options");
-		options.getItems().addAll(exit, freshStart);
-		mb = new MenuBar(options);
-		
+		OptionBar newOptionBar = new OptionBar(this.game);
+
+		mb = newOptionBar.getOptionBar();
+
 		// init layout
 		betFieldBox = new HBox(betAmountField);
 		confirmBox = new HBox(confirmButton);
@@ -137,21 +135,13 @@ public class currentBetScene {
 				game.currentMoney -= game.currentBet;
 				
 				userMoneyField.setText("Your money: $" + game.currentMoney);
-				
-				// go to the next scene TODO
+
+				GameScreen newGame = new GameScreen(this.game);
+
+				this.game.getPrimaryStage().setScene(newGame.getGameScene());
+
 		});
-		
-		// if user click exit, exit application
-		exit.setOnAction((ActionEvent e) -> {
-			System.exit(0);
-		});
-		
-		// if user click fresh start, reset the game, go to main scene
-		freshStart.setOnAction((ActionEvent e) -> {
-			game.reset();
-			
-			// go to the initial scene TODO
-		});
+
 		
 	}
 	
