@@ -239,11 +239,11 @@ public class BaccaratGame extends Application {
 	}
 	//feel free to remove the starter code from this method
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start(Stage curPrimaryStage) throws Exception {
 		// TODO Auto-generated method stub
 		primaryStage.setTitle("Baccarat Game");
 
-		this.primaryStage = primaryStage;
+		primaryStage = curPrimaryStage;
 		optionBar.createOptionBar();
 		StartMenu.makeStartMenu();
 		gameScreen.makeGameScreen();
