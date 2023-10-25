@@ -33,12 +33,14 @@ public class BaccaratGame extends Application {
 	public BaccaratDealer theDealer;
 	public BaccaratGameLogic gameLogic;
 	public double currentBet;
-	public double totalWinnings;
-	public double currentMoney; // add this
+	public int numWins;
+	public int numRounds;
+	public double currentMoney;
 	public String userChoice;
 	public StartMenu initialScreen;
 
-
+	public currentBetScene betScene;
+	public Stage primaryStage;
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -227,25 +229,42 @@ public class BaccaratGame extends Application {
 	}
 	//feel free to remove the starter code from this method
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start(Stage primaryStage1) throws Exception {
 		// TODO Auto-generated method stub
+		primaryStage = primaryStage1;
 		primaryStage.setTitle("Baccarat Game");
 
+		this.currentMoney = 1000;
+		this.numWins = 0;
+		this.numRounds = 0;
+		
 		optionBar.createOptionBar();
 		StartMenu.makeStartMenu();
 		gameScreen.makeGameScreen();
-
+		betScene = new currentBetScene(this);
+	
+		
 		primaryStage.setScene(gameScreen.getGameScene());
 		gameScreen.addCard();
-
+		primaryStage.setScene(betScene.getScene());
 		primaryStage.show();
-		
-				
-		
+			
 	}
 
 
 
+	// reset the game
+	public void reset() {
+		playerHand = null;
+		bankerHand = null;
+		theDealer = null;
+		gameLogic = null;
+		currentBet = 0;
+		numWins = 0;
+		numRounds = 0;
+		currentMoney = 1000;
+		userChoice = "N/A";
+	}
 	
 	// check if the hands are in natural case
 	public boolean checkNatural() {
