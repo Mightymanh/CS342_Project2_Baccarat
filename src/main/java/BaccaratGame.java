@@ -38,6 +38,8 @@ public class BaccaratGame extends Application {
 	public String userChoice;
 	public StartMenu initialScreen;
 
+	public static Stage primaryStage;
+
 
 	
 	public static void main(String[] args) {
@@ -60,6 +62,15 @@ public class BaccaratGame extends Application {
 			exitButton = new MenuItem("Exit");
 			restartButton = new MenuItem("Restart");
 			optionMenu.getItems().addAll(exitButton, restartButton);
+
+			exitButton.setOnAction((e) -> {
+				System.exit(0);
+			});
+
+			restartButton.setOnAction((e)->{
+				StartMenu.makeStartMenu();
+				primaryStage.setScene(StartMenu.switchScene());
+			});
 			menuBar.getMenus().add(optionMenu);
 		}
 
@@ -222,6 +233,7 @@ public class BaccaratGame extends Application {
 
 			playerCards.getChildren().addAll(card,card2,card3);
 			bankerCards.getChildren().addAll(card4,card5,card6);
+			System.out.println("Title: " + ((Stage)gameScene.getWindow()).getTitle());
 		}
 
 	}
@@ -231,9 +243,11 @@ public class BaccaratGame extends Application {
 		// TODO Auto-generated method stub
 		primaryStage.setTitle("Baccarat Game");
 
+		this.primaryStage = primaryStage;
 		optionBar.createOptionBar();
 		StartMenu.makeStartMenu();
 		gameScreen.makeGameScreen();
+
 
 		primaryStage.setScene(gameScreen.getGameScene());
 		gameScreen.addCard();
