@@ -44,6 +44,10 @@ public class BaccaratGame extends Application {
 	public currentBetScene betScene;
 	public OptionBar optionObject;
 
+	public String Winner;
+	public Card playerThirdCard;
+	public int curPhase = 0;
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		launch(args);
@@ -61,10 +65,8 @@ public class BaccaratGame extends Application {
 
 		primaryStage = curPrimaryStage;
 		primaryStage.setTitle("Baccarat Game");
+		reset();
 
-		this.currentMoney = 1000;
-		this.numWins = 0;
-		this.numRounds = 0;
 
 
 		StartMenu newStart = new StartMenu(this);
@@ -81,16 +83,31 @@ public class BaccaratGame extends Application {
 
 	// reset the game
 	public void reset() {
-		playerHand = null;
-		bankerHand = null;
-		theDealer = null;
-		gameLogic = null;
+		playerHand = new ArrayList<>();
+		bankerHand = new ArrayList<>();
+		theDealer = new BaccaratDealer();
+		theDealer.generateDeck();
+		theDealer.shuffleDeck();
+		gameLogic = new BaccaratGameLogic();
 		currentBet = 0;
 		numWins = 0;
 		numRounds = 0;
 		currentMoney = 1000;
+		curPhase = 0;
+		playerThirdCard = null;
+		Winner = null;
 		userChoice = "N/A";
 	}
+
+	// when user press next button on the game screen, this function allows a small reset to happen
+	public void again(){
+		playerHand.clear();
+		bankerHand.clear();
+		playerThirdCard = null;
+		Winner = null;
+		userChoice = "N/A";
+	}
+
 	
 	// check if the hands are in natural case
 	public boolean checkNatural() {
@@ -104,14 +121,84 @@ public class BaccaratGame extends Application {
 	
 	// determine if the user win or lost their bet and return the amount won or lost based on the value in currentBet
 	public double evaluateWinnings() {
-		String winner = gameLogic.whoWon(playerHand, bankerHand);
+		Winner = gameLogic.whoWon(playerHand, bankerHand);
 		
 		// decide the money user win or lose
-		if (userChoice.equals(winner)) {
+		if (userChoice.equals(Winner)) {
 			return currentBet * 2;
 		}
 		
 		return 0;
+	}
+
+	// show the winner and end the game
+	public void endGame(GameScreen screen) {
+		this.currentMoney+= this.evaluateWinnings();
+
+		screen.dealButton.setDisable(true);
+
+		if (this.Winner.equals(userChoice)){
+			numWins++;
+			screen.result.setText("Winner: "+this.Winner+ "\n You won the bet!!");
+		} else {
+			screen.result.setText("Winner: "+this.Winner+ "\n You Lose the bet!!");
+		}
+		numRounds++;
+		screen.curWinning.setText("Win: "+ this.numWins);
+		//curWinning.setDisable(true);
+		screen.totalWinnings.setText("Round: "+this.numRounds);
+		screen.curMoney.setText("$"+this.currentMoney);
+		screen.nextButton.setDisable(false);
+		this.curPhase = 0;
+	}
+
+	/*
+	 * Deal button split into 3 phase
+	 * 1st phase(curDeal == 0): each gets 2 cards. If natural, then we dont proceed furthur
+	 * 2nd phase: check if player can draw 3rd card
+	 * 3rd Phase: check if bank can draw 3rd card. Then evavulate winner
+	 * */
+	public void gamePhase(GameScreen screen) {
+		// 1st phase
+		if (this.curPhase==0) {
+			ArrayList<Card> curdeal =  this.theDealer.dealHand();
+			this.playerHand.add(curdeal.get(0));
+			this.playerHand.add(curdeal.get(1));
+			screen.addCard(0, curdeal.get(0));
+			screen.addCard(0, curdeal.get(1));
+			curdeal = this.theDealer.dealHand();
+			this.bankerHand.add(curdeal.get(0));
+			this.bankerHand.add(curdeal.get(1));
+			screen.addCard(1, curdeal.get(0));
+			screen.addCard(1, curdeal.get(1));
+
+			screen.updateScore();
+			this.curPhase++;
+			if(this.checkNatural()) {
+				endGame(screen);
+			}
+		} else if(this.curPhase == 1){ // second phase
+			if(this.gameLogic.evaluatePlayerDraw(this.playerHand)) {
+				this.playerThirdCard = this.theDealer.drawOne();
+				this.playerHand.add(this.playerThirdCard);
+				screen.addCard(0,this.playerThirdCard);
+
+			} else if (!this.gameLogic.evaluateBankerDraw(this.bankerHand,playerThirdCard)) {
+				endGame(screen);
+			} else {
+				screen.result.setText("Player cannot draw a card\n Press the Deal Button again");
+			}
+			screen.updateScore();
+			this.curPhase++;
+		} else if (this.curPhase == 2) { // third phase
+			if (this.gameLogic.evaluateBankerDraw(this.bankerHand,this.playerThirdCard)) {
+				this.bankerHand.add(this.theDealer.drawOne());
+				screen.addCard(1,this.bankerHand.get(2));
+
+			}
+			screen.updateScore();
+			endGame(screen);
+		}
 	}
 
 }

@@ -103,6 +103,7 @@ public class currentBetScene {
 				
 				// set userChoice
 				game.userChoice = "Player";
+				lb2.setText("You picked Player");
 		});
 		b2.setOnAction((ActionEvent e) -> {
 				// unhighlight all three buttons
@@ -115,6 +116,7 @@ public class currentBetScene {
 				
 				// set userChoice
 				game.userChoice = "Draw";
+				lb2.setText("You picked Draw");
 		});
 		b3.setOnAction((ActionEvent e) -> {
 				// unhighlight all three buttons
@@ -126,12 +128,19 @@ public class currentBetScene {
 				b3.setStyle("-fx-base: #FEE715;");
 				
 				// set userChoice
-				game.userChoice = "Draw";
+				game.userChoice = "Banker";
+				lb2.setText("You picked Banker");
 		});
 		
 		// if user press confirm, set the current bet money, set the option, then go to the next scene
 		confirmButton.setOnAction((ActionEvent e) -> {
-				game.currentBet = Integer.parseInt(betAmountField.getText());
+				try {
+					game.currentBet = Integer.parseInt(betAmountField.getText());
+				} catch (Exception error) {
+					lb1.setText("Must be Valid bet Amount");
+					return;
+				}
+
 				game.currentMoney -= game.currentBet;
 				
 				userMoneyField.setText("Your money: $" + game.currentMoney);
