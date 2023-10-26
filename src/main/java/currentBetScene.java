@@ -10,14 +10,20 @@ import javafx.scene.control.MenuItem;
 
 // UI layouts
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 // Event handlers
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-
+import javafx.geometry.Insets;
 //
 import javafx.geometry.Pos;
 
@@ -38,9 +44,6 @@ public class currentBetScene {
 	private TextField numRoundField;
 	private TextField numWinField;
 	private MenuBar mb;
-	private Menu options;
-	private MenuItem exit;
-	private MenuItem freshStart;
 	
 	// UI layout
 	private HBox betFieldBox;
@@ -73,7 +76,7 @@ public class currentBetScene {
 		userMoneyField.setEditable(false);
 		numRoundField = new TextField("Rounds played: " + game.numRounds);
 		numRoundField.setEditable(false);
-		numWinField = new TextField("Rounds won:" + game.numWins);
+		numWinField = new TextField("Rounds won: " + game.numWins);
 		numWinField.setEditable(false);
 		
 		// init menu options
@@ -155,10 +158,11 @@ public class currentBetScene {
 	}
 	
 	private void decorateLayoutUI() {
+		
 		// set the width of the child of root so they add up to root's width
-		gameStats.setPrefWidth(150);
+		gameStats.setPrefWidth(160);
 		mainPage.setPrefWidth(750);
-		mb.setPrefWidth(100);
+		mb.setPrefWidth(90);
 		
 		// set childs of mainPage to center
 		mainPage.setAlignment(Pos.CENTER);
@@ -166,17 +170,19 @@ public class currentBetScene {
 		// set choiceRow width to fit with the mainPage
 		choiceRow.setPrefWidth(700);
 		
-		// set all buttons to center and add space to it
+		// set all buttons to center and add space between them
 		choiceRow.setAlignment(Pos.TOP_CENTER);
-		choiceRow.setSpacing(70);
+		choiceRow.setSpacing(100);
 
-		// add spacing between the childs of mainPage, make sure that the last child is near the bottom of root
+		// add space between the childs of mainPage, make sure that the last child is near the bottom of root
 		lb1.setPrefHeight(100);
 		lb1.setAlignment(Pos.CENTER);
 		betFieldBox.setPrefHeight(100);
 		lb2.setPrefHeight(100);
-		choiceRow.setPrefHeight(120);
-		//confirmBox.setPrefHeight(120);
+		choiceRow.setPrefHeight(150);
+		mainPage.setMargin(choiceRow, new Insets(0, 0, 10, 0));
+		mainPage.setMargin(lb2, new Insets(10, 0, 10, 0));
+		confirmBox.setPrefHeight(120);
 		
 		
 		// set betAmountField to be smaller & in the center, 
@@ -185,14 +191,56 @@ public class currentBetScene {
 		betAmountField.setPrefSize(300, 100);
 		betAmountField.setAlignment(Pos.CENTER);
 		
-		// make the lb1 larger and at the center (like a title)
+		// make the lb1 and lb2 larger and at the center (like a title)
 		lb1.setTextAlignment(TextAlignment.CENTER);
+		lb1.setFont(new Font(40));
+		lb2.setFont(new Font(40));
+		//lb1.setStyle("-fx-border-color: black");;
+		
 		
 		// set the text in betAmountField to be larger
+		betAmountField.setFont(new Font(15));
 		
+		// make the buttons bigger and nicer
+		b1.setPrefSize(100, 100);
+		b1.setFont(new Font(20));
+		b2.setPrefSize(100, 100);
+		b2.setFont(new Font(20));
+		b3.setPrefSize(100, 100);
+		b3.setFont(new Font(20));
+		
+		// make the confirm button longer
+		confirmButton.setPrefSize(200, 50);
+		confirmButton.setFont(new Font(20));
+		
+		// make the text field in stats bigger
+		userMoneyField.setPrefHeight(40);
+		numRoundField.setPrefHeight(40);
+		numWinField.setPrefHeight(40);
+		
+	}
+	
+	void colorUI() {
+		// set color of buttons
+		b1.setStyle("-fx-base: #5B71D9;");
+		b2.setStyle("-fx-base: #5B71D9;");
+		b3.setStyle("-fx-base: #5B71D9;");
+		
+		// set the background color to blue
+		//root.setStyle("-fx-background-color: #001eff");
+		
+		// set color of confirm button to yellow
+		confirmButton.setStyle("-fx-base: #FEE715");
+		
+	}
+	
+	void fontUI() {
 		// change the font of lb1 to be something nicer
 		
-		
+		// set the text field to be larger in game stat
+		userMoneyField.setFont(new Font(15));
+		numRoundField.setFont(new Font(15));
+		numWinField.setFont(new Font(15));
 		
 	}
 	
@@ -208,6 +256,12 @@ public class currentBetScene {
 		
 		// decorate UI
 		decorateLayoutUI();
+		
+		// color UI
+		colorUI();
+		
+		// font UI
+		fontUI();
 		
 		// init scene
 		scene = new Scene(root, 1000, 600);

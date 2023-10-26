@@ -9,6 +9,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -22,6 +24,8 @@ import javafx.util.Duration;
 import org.w3c.dom.Text;
 
 import javax.swing.*;
+
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 
@@ -49,6 +53,7 @@ public class BaccaratGame extends Application {
 	public int curPhase = 0;
 
 	public static void main(String[] args) {
+		
 		// TODO Auto-generated method stub
 		launch(args);
 	}
@@ -61,7 +66,6 @@ public class BaccaratGame extends Application {
 	@Override
 	public void start(Stage curPrimaryStage) throws Exception {
 		// TODO Auto-generated method stub
-
 
 		primaryStage = curPrimaryStage;
 		primaryStage.setTitle("Baccarat Game");
@@ -144,10 +148,10 @@ public class BaccaratGame extends Application {
 			screen.result.setText("Winner: "+this.Winner+ "\n You Lose the bet!!");
 		}
 		numRounds++;
-		screen.curWinning.setText("Win: "+ this.numWins);
+		screen.numWinField.setText("Rounds won: " + this.numWins);
 		//curWinning.setDisable(true);
-		screen.totalWinnings.setText("Round: "+this.numRounds);
-		screen.curMoney.setText("$"+this.currentMoney);
+		screen.numRoundField.setText("Rounds played: " + this.numRounds);
+		screen.curMoneyField.setText("Your money $"+this.currentMoney);
 		screen.nextButton.setDisable(false);
 		this.curPhase = 0;
 	}
@@ -158,9 +162,10 @@ public class BaccaratGame extends Application {
 	 * 2nd phase: check if player can draw 3rd card
 	 * 3rd Phase: check if bank can draw 3rd card. Then evavulate winner
 	 * */
-	public void gamePhase(GameScreen screen) {
+	public void gamePhase(GameScreen screen) throws FileNotFoundException {
 		// 1st phase
 		if (this.curPhase==0) {
+			// deal the first 2 cards
 			ArrayList<Card> curdeal =  this.theDealer.dealHand();
 			this.playerHand.add(curdeal.get(0));
 			this.playerHand.add(curdeal.get(1));
@@ -172,8 +177,11 @@ public class BaccaratGame extends Application {
 			screen.addCard(1, curdeal.get(0));
 			screen.addCard(1, curdeal.get(1));
 
+			// update the score for player and banker
 			screen.updateScore();
 			this.curPhase++;
+			
+			// check whether the current hands are natural, if so then end the game
 			if(this.checkNatural()) {
 				endGame(screen);
 			}
