@@ -5,7 +5,7 @@ public class Card {
     public String suite;
     public int value;
     public String name;
-    public String imagePath = "pokerCards/" + value + name + ".png";
+    public String imagePath;
     Image image;
     Card(String theSuite, int theValue,String theName)  {
         this.suite = theSuite;

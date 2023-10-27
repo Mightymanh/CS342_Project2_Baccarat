@@ -143,7 +143,12 @@ public class currentBetScene {
 					lb1.setText("Must be Valid bet Amount");
 					return;
 				}
-
+				
+				if (game.currentBet > game.currentMoney) {
+					lb1.setText("You bet more than you Have!");
+					return;
+				}	
+				
 				game.currentMoney -= game.currentBet;
 				
 				userMoneyField.setText("Your money: $" + game.currentMoney);

@@ -55,7 +55,17 @@ public class GameScreen {
             });
 
             nextButton.setOnAction((e)->{
-
+            	if (game.currentMoney == 0) {
+            		if (result.getText() == "GameOver") {
+            			StartMenu newStart = new StartMenu(game);
+            			game.reset();
+            			game.getPrimaryStage().setScene(newStart.getStartScene());
+            		}
+            		else result.setText("GameOver");
+        			
+                    return;
+        		}
+            	
                 currentBetScene newBet = new currentBetScene(this.game);
                 this.game.again();
                 this.game.getPrimaryStage().setScene(newBet.getScene());
@@ -199,11 +209,8 @@ public class GameScreen {
     		// make the title Result bigger and center it
     		result.setFont(new Font(30));
             result.setAlignment(Pos.CENTER);
-            
-
-            
+               
         }
-        
         
     }
 
