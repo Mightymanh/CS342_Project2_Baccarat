@@ -12,6 +12,8 @@ public class Card {
         this.value = theValue;
         this.name = theName;
         this.imagePath = "pokerCards/" + name + "_of_" + suite +"s.png";
+
+        System.out.println(this.imagePath);
         this.image = new Image(getClass().getClassLoader().getResource(imagePath).toExternalForm());
     }
 }

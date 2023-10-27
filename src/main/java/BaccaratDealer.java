@@ -10,7 +10,7 @@ public class BaccaratDealer {
     }
     private void generateSuite(String theSuite) {
 
-        String[] nameList = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9"};
+        String[] nameList = {"ace", "2", "3", "4", "5", "6", "7", "8", "9"};
 
         for(int i = 0; i < nameList.length;i++) {
             Card newCard = new Card(theSuite, i+1, nameList[i]);
@@ -18,11 +18,11 @@ public class BaccaratDealer {
             this.deck.add(newCard);
         }
 
-        Card newCard = new Card(theSuite, 0, "Jack");
+        Card newCard = new Card(theSuite, 0, "jack");
         this.deck.add(newCard);
-        newCard = new Card(theSuite, 0, "King");
+        newCard = new Card(theSuite, 0, "king");
         this.deck.add(newCard);
-        newCard = new Card(theSuite, 0, "Queen");
+        newCard = new Card(theSuite, 0, "queen");
         this.deck.add(newCard);
         newCard = new Card(theSuite, 0, "10");
         this.deck.add(newCard);
@@ -32,10 +32,10 @@ public class BaccaratDealer {
         // heart
         this.deck.clear();
 
-        generateSuite("Heart");
-        generateSuite("Spade");
-        generateSuite("Diamond");
-        generateSuite("Club");
+        generateSuite("heart");
+        generateSuite("spade");
+        generateSuite("diamond");
+        generateSuite("club");
 
     }
 
