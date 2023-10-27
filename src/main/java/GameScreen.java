@@ -1,11 +1,15 @@
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
@@ -31,13 +35,21 @@ public class GameScreen {
         MenuBar mb;
         
         Label result;
+        Label playerLabel;
+        Label bankerLabel;
 
         HBox playerCards;
         Label playerScore;
         HBox bankerCards;
         Label bankerScore;
+        HBox gameStats;
+        
+        Line line;
+
         
         // UI layout
+        VBox playerStat;
+        VBox bankerStat;
         HBox root;
         
         Scene gameScene;
@@ -56,12 +68,12 @@ public class GameScreen {
 
             nextButton.setOnAction((e)->{
             	if (game.currentMoney == 0) {
-            		if (result.getText() == "GameOver") {
+            		if (result.getText() == "Game Over") {
             			StartMenu newStart = new StartMenu(game);
             			game.reset();
             			game.getPrimaryStage().setScene(newStart.getStartScene());
             		}
-            		else result.setText("GameOver");
+            		else result.setText("Game Over");
         			
                     return;
         		}
@@ -104,15 +116,13 @@ public class GameScreen {
         // add cards to the screen
         public  void addCard(int side, Card curCard) throws FileNotFoundException {
         	ImageView imageView = new ImageView(curCard.image);
-        	imageView.setFitHeight(120);
+        	imageView.setFitHeight(130);
         	imageView.setPreserveRatio(true);
         	
             // 0 means player, 1 means banker
             if (side == 0 ) {
-                Label curCardLabel  = new Label(curCard.suite + " "+curCard.name);
                 playerCards.getChildren().add(imageView);
             } else {
-                Label curCardLabel  = new Label(curCard.suite + " "+curCard.name);
                 bankerCards.getChildren().add(imageView);
             }
         }
@@ -151,17 +161,27 @@ public class GameScreen {
             bottomBox.setSpacing(100);
 
             // create player cards holder and banker card holder
+            Line line = new Line();
+            line.setStartX(0);
+            line.setEndX(0);
+            line.setStartY(20);
+            line.setEndY(250);
+            line.setStrokeWidth(4);
+            
+            
             playerCards = new HBox();
-            bankerCards = new HBox();
+            bankerCards = new HBox();      
             playerScore = new Label("Score: "+ game.gameLogic.handTotal(game.playerHand));
             bankerScore = new Label("Score: "+ game.gameLogic.handTotal(game.bankerHand));
-            VBox playerStat =  new VBox(playerScore, playerCards);
+            playerLabel = new Label("Player");
+            bankerLabel = new Label("Banker");
+            playerStat =  new VBox(playerLabel, playerScore, playerCards);
             playerStat.setAlignment(Pos.CENTER);
-            playerStat.setMinWidth(200);
-            VBox bankerStat =  new VBox(bankerScore,bankerCards);
+            playerStat.setPrefWidth(350);
+            bankerStat =  new VBox(bankerLabel, bankerScore,bankerCards);
             bankerStat.setAlignment(Pos.CENTER);
-            bankerStat.setMinWidth(200);
-            HBox gameStats = new HBox(playerStat, bankerStat);
+            bankerStat.setPrefWidth(350);
+            gameStats = new HBox(playerStat, line, bankerStat);
             gameStats.setSpacing(100);
             gameStats.setMinHeight(300);
             gameStats.setAlignment(Pos.CENTER);
@@ -207,10 +227,30 @@ public class GameScreen {
     		userSideField.setFont(new Font(15));
     		
     		// make the title Result bigger and center it
-    		result.setFont(new Font(30));
+    		result.setFont(new Font(35));
             result.setAlignment(Pos.CENTER);
+            
+            // make the label player and banker bigger
+            playerLabel.setFont(new Font(35));
+            bankerLabel.setFont(new Font(35));
+            playerStat.setMargin(playerScore, new Insets(0, 0, 10, 0));
+            bankerStat.setMargin(bankerScore, new Insets(0, 0, 10, 0));   
+            
+            // make the line always in the center of the gameStats
+            
+            // make the text Deal and Next button bigger
+            dealButton.setFont(new Font(20));
+            nextButton.setFont(new Font(20));
                
         }
+        
+//        void colorUI() {
+//        	
+//        }
+//        
+//        void fontUI() {
+//        	        	
+//        }
         
     }
 

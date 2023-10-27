@@ -143,9 +143,9 @@ public class BaccaratGame extends Application {
 
 		if (this.Winner.equals(userChoice)){
 			numWins++;
-			screen.result.setText("Winner: "+this.Winner+ "\n You won the bet!!");
+			screen.result.setText("Winner: "+this.Winner+ "\nYou won the bet!!");
 		} else {
-			screen.result.setText("Winner: "+this.Winner+ "\n You Lose the bet!!");
+			screen.result.setText("Winner: "+this.Winner+ "\nYou Lose the bet!!");
 		}
 		numRounds++;
 		screen.numWinField.setText("Rounds won: " + this.numWins);
@@ -194,7 +194,7 @@ public class BaccaratGame extends Application {
 			} else if (!this.gameLogic.evaluateBankerDraw(this.bankerHand,playerThirdCard)) {
 				endGame(screen);
 			} else {
-				screen.result.setText("Player cannot draw a card\n Press the Deal Button again");
+				screen.result.setText("Player cannot draw a card\nPress the Deal Button again");
 			}
 			screen.updateScore();
 			this.curPhase++;

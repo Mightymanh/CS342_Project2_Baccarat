@@ -199,19 +199,15 @@ public class currentBetScene {
 		// make the lb1 and lb2 larger and at the center (like a title)
 		lb1.setTextAlignment(TextAlignment.CENTER);
 		lb1.setFont(new Font(40));
-		lb2.setFont(new Font(40));
-		//lb1.setStyle("-fx-border-color: black");;
-		
+		lb2.setFont(new Font(40));		
 		
 		// set the text in betAmountField to be larger
 		betAmountField.setFont(new Font(15));
 		
 		// make the buttons bigger and nicer
-		b1.setPrefSize(100, 100);
-		b1.setFont(new Font(20));
-		b2.setPrefSize(100, 100);
-		b2.setFont(new Font(20));
-		b3.setPrefSize(100, 100);
+		b1.setPrefSize(150, 100);
+		b2.setPrefSize(150, 100);
+		b3.setPrefSize(150, 100);
 		b3.setFont(new Font(20));
 		
 		// make the confirm button longer
@@ -241,6 +237,11 @@ public class currentBetScene {
 	
 	void fontUI() {
 		// change the font of lb1 to be something nicer
+		
+		// make the font of buttons bigger
+		b1.setFont(new Font(20));
+		b2.setFont(new Font(20));
+		b3.setFont(new Font(20));
 		
 		// set the text field to be larger in game stat
 		userMoneyField.setFont(new Font(15));
