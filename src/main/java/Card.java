@@ -14,7 +14,15 @@ public class Card {
         this.imagePath = "pokerCards/" + name + "_of_" + suite +"s.png";
 
         //System.out.println(this.imagePath);
-        this.image = new Image(getClass().getClassLoader().getResource(imagePath).toExternalForm());
+
+        try {
+            this.image = new Image(getClass().getClassLoader().getResource(imagePath).toExternalForm());
+        } catch(Exception e){
+
+        }
+
+
+
     }
 }
 
