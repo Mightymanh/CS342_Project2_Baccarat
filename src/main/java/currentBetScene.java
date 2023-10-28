@@ -3,6 +3,7 @@ import javafx.scene.Scene;
 // UI components
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
@@ -10,28 +11,19 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 
 // UI layouts
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.text.*;
 // Event handlers
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 //
 import javafx.geometry.Pos;
+import javafx.scene.text.Font;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 
 public class currentBetScene {
 	
@@ -46,10 +38,10 @@ public class currentBetScene {
 	private Button b2;
 	private Button b3;
 	private Button confirmButton;
-	private TextField userMoneyField;
-	private TextField numRoundField;
-	private TextField numWinField;
-	private TextField cardLeft;
+	private Label userMoneyField;
+	private Label numRoundField;
+	private Label numWinField;
+	private Label cardLeft;
 	private MenuBar mb;
 	
 	// UI layout
@@ -59,7 +51,8 @@ public class currentBetScene {
 	private VBox gameStats;
 	private VBox mainPage;
 	private HBox root;
-	
+
+
 	// Scene
 	private Scene scene;
 	
@@ -75,18 +68,19 @@ public class currentBetScene {
 		b2 = new Button("Draw");
 		b3 = new Button("Banker");
 		confirmButton = new Button("Confirm");
+		//buttonFont = new Font("sans-serif", FontWeight.MEDIUM, FontPosture.REGULAR,20.0);
 		
 		// init TextField
 		betAmountField = new TextField();
 		betAmountField.setPromptText("Enter the amount you want to bet as integer");
-		userMoneyField = new TextField("Your money: $" + game.currentMoney);
-		userMoneyField.setEditable(false);
-		numRoundField = new TextField("Rounds played: " + game.numRounds);
-		numRoundField.setEditable(false);
-		numWinField = new TextField("Rounds won: " + game.numWins);
-		numWinField.setEditable(false);
-		cardLeft = new TextField("Cards left: " + game.theDealer.deck.size());
-		cardLeft.setEditable(false);
+		userMoneyField = new Label("Your money: $" + game.currentMoney);
+		//userMoneyField.setEditable(false);
+		numRoundField = new Label("Rounds played: " + game.numRounds);
+		//numRoundField.setEditable(false);
+		numWinField = new Label("Rounds won: " + game.numWins);
+		//numWinField.setEditable(false);
+		cardLeft = new Label("Cards left: " + game.theDealer.deck.size());
+		//cardLeft.setEditable(false);
 		
 		// init menu options
 		OptionBar newOptionBar = new OptionBar(this.game);
@@ -105,13 +99,9 @@ public class currentBetScene {
 	private void initActionEvent() {
 		// if user choose an option, set game.userChoice = that option, highlight that button
 		b1.setOnAction((ActionEvent e) -> {
-				// unhighlight all three buttons
-				b1.setStyle("-fx-base: #5B71D9;");
-				b2.setStyle("-fx-base: #5B71D9;");
-				b3.setStyle("-fx-base: #5B71D9;");
-				
-				// highlight this button
-				b1.setStyle("-fx-base: #FEE715;");
+				b2.setOpacity(.5);
+				b3.setOpacity(.5);
+				b1.setOpacity(1);
 				
 				// set userChoice
 				game.userChoice = "Player";
@@ -119,12 +109,11 @@ public class currentBetScene {
 		});
 		b2.setOnAction((ActionEvent e) -> {
 				// unhighlight all three buttons
-				b1.setStyle("-fx-base: #5B71D9;");
-				b2.setStyle("-fx-base: #5B71D9;");
-				b3.setStyle("-fx-base: #5B71D9;");
-				
+				b1.setOpacity(.5);
+				b3.setOpacity(.5);
+				b2.setOpacity(1);
 				// highlight this button
-				b2.setStyle("-fx-base: #FEE715;");
+				//b2.setStyle("-fx-base: #FEE715;");
 				
 				// set userChoice
 				game.userChoice = "Draw";
@@ -132,12 +121,12 @@ public class currentBetScene {
 		});
 		b3.setOnAction((ActionEvent e) -> {
 				// unhighlight all three buttons
-				b1.setStyle("-fx-base: #5B71D9;");
-				b2.setStyle("-fx-base: #5B71D9;");
-				b3.setStyle("-fx-base: #5B71D9;");
-				
+
+				b2.setOpacity(.5);
+				b1.setOpacity(.5);
+				b3.setOpacity(1);
 				// highlight this button
-				b3.setStyle("-fx-base: #FEE715;");
+				//b3.setStyle("-fx-base: #FEE715;");
 				
 				// set userChoice
 				game.userChoice = "Banker";
@@ -150,7 +139,7 @@ public class currentBetScene {
 				try {
 					game.currentBet = Integer.parseInt(betAmountField.getText());
 				} catch (Exception error) {
-					lb1.setText("Must be valid bet amount\n Make sure that you input an interger");
+					lb1.setText("Must be valid Integer");
 					return;
 				}
 				
@@ -162,7 +151,7 @@ public class currentBetScene {
 				
 				// if the user bet too few then decline the input
 				if (game.currentBet < 1) {
-					lb1.setText("You bet too few!\n Please bet at least $1");
+					lb1.setText("You bet too few!");
 					return;
 				}
 				
@@ -182,7 +171,7 @@ public class currentBetScene {
 	private void decorateLayoutUI() {
 		
 		// set the width of the child of root so they add up to root's width
-		gameStats.setPrefWidth(160);
+		gameStats.setPrefWidth(180);
 		mainPage.setPrefWidth(750);
 		mb.setPrefWidth(90);
 		
@@ -215,8 +204,7 @@ public class currentBetScene {
 		
 		// make the lb1 and lb2 larger and at the center (like a title)
 		lb1.setTextAlignment(TextAlignment.CENTER);
-		lb1.setFont(new Font(40));
-		lb2.setFont(new Font(40));		
+
 		
 		// set the text in betAmountField to be larger
 		betAmountField.setFont(new Font(15));
@@ -225,31 +213,52 @@ public class currentBetScene {
 		b1.setPrefSize(150, 100);
 		b2.setPrefSize(150, 100);
 		b3.setPrefSize(150, 100);
-		b3.setFont(new Font(20));
+
 		
 		// make the confirm button longer
 		confirmButton.setPrefSize(200, 50);
-		confirmButton.setFont(new Font(20));
-		
-		// make the text field in stats bigger
+		confirmButton.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, FontPosture.REGULAR,20.0));
+
+		// make Labels in stats bigger
 		userMoneyField.setPrefHeight(40);
 		numRoundField.setPrefHeight(40);
 		numWinField.setPrefHeight(40);
 		cardLeft.setPrefHeight(40);
+
+		//adjust padding of the Labels
+		Insets padding = new Insets(0,0,5,5);
+		userMoneyField.setPadding(padding);
+		numRoundField.setPadding(padding);
+		numWinField.setPadding(padding);
+		cardLeft.setPadding(padding);
 		
 	}
 	
 	void colorUI() {
-		// set color of buttons
-		b1.setStyle("-fx-base: #5B71D9;");
-		b2.setStyle("-fx-base: #5B71D9;");
-		b3.setStyle("-fx-base: #5B71D9;");
+		lb1.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, FontPosture.REGULAR,40));
+		lb2.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, FontPosture.REGULAR,40.0));
+
+		b1.setStyle("-fx-base: #027833;");
+		b2.setStyle("-fx-base: #027833;");
+		b3.setStyle("-fx-base: #027833;");
+
 		
 		// set the background color to blue
-		//root.setStyle("-fx-background-color: #001eff");
 		
 		// set color of confirm button to yellow
-		confirmButton.setStyle("-fx-base: #FEE715");
+		confirmButton.setStyle("-fx-base: #d40b33");
+
+		//DropShadow shadow = new DropShadow();
+		lb1.setTextFill(Color.WHITE);
+		lb2.setTextFill(Color.WHITE);
+
+		//mb.setStyle("-fx-background-color: transparent; -fx-text-fill: #FFFFFF;");
+
+
+		userMoneyField.setTextFill(Color.YELLOW);
+		numRoundField.setTextFill(Color.WHITE);
+		cardLeft.setTextFill(Color.WHITE);
+		numWinField.setTextFill(Color.WHITE);
 		
 	}
 	
@@ -257,15 +266,21 @@ public class currentBetScene {
 		// change the font of lb1 to be something nicer
 		
 		// make the font of buttons bigger
-		b1.setFont(new Font(20));
-		b2.setFont(new Font(20));
-		b3.setFont(new Font(20));
-		
+		b1.setFont(Font.font("sans-serif", FontWeight.BOLD, FontPosture.REGULAR,20.0));
+		b2.setFont(Font.font("sans-serif", FontWeight.BOLD, FontPosture.REGULAR,20.0));
+		b3.setFont(Font.font("sans-serif", FontWeight.BOLD, FontPosture.REGULAR,20.0));
+
+
 		// set the text field to be larger in game stat
-		userMoneyField.setFont(new Font(15));
-		numRoundField.setFont(new Font(15));
-		numWinField.setFont(new Font(15));
-		cardLeft.setFont(new Font(15));
+		userMoneyField.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, FontPosture.REGULAR,15));
+		numRoundField.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, FontPosture.REGULAR,15));
+		numWinField.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, FontPosture.REGULAR,15));
+		cardLeft.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, FontPosture.REGULAR,15));
+
+
+
+
+
 		
 	}
 	

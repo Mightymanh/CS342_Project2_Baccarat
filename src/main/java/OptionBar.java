@@ -36,6 +36,7 @@ public class OptionBar {
 
         addEvents();
 
+
         menuBar.getMenus().add(optionMenu);
     }
 

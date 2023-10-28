@@ -17,6 +17,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -32,11 +34,11 @@ public class GameScreen {
         // UI components
         VBox leftBox;
         VBox middleBox;
-        TextField numWinField;
-        TextField numRoundField;
-        TextField curMoneyField;
-        TextField userSideField;
-        TextField cardLeft;
+        Label numWinField;
+        Label numRoundField;
+        Label curMoneyField;
+        Label userSideField;
+        Label cardLeft;
         Button nextButton;
         Button dealButton;
         MenuBar mb;
@@ -151,17 +153,11 @@ public class GameScreen {
         // initialze all the UI to the left of the screen
         private void initLeftBox() {
             // create the fields
-            numWinField = new TextField("Rounds won: "+ this.game.numWins);
-            numRoundField = new TextField("Rounds played: "+this.game.numRounds);
-            curMoneyField = new TextField("Your money: $"+this.game.currentMoney);
-            userSideField = new TextField("Picked side: "+this.game.userChoice);
-            cardLeft = new TextField("Cards left: "+ this.game.theDealer.deckSize());
-            // make them uneditable
-            numRoundField.setEditable(false);
-            curMoneyField.setEditable(false);
-            numWinField.setEditable(false);
-            userSideField.setEditable(false);
-            cardLeft.setEditable(false);
+            numWinField = new Label("Rounds won: "+ this.game.numWins);
+            numRoundField = new Label("Rounds played: "+this.game.numRounds);
+            curMoneyField = new Label("Your money: $"+this.game.currentMoney);
+            userSideField = new Label("Picked side: "+this.game.userChoice);
+            cardLeft = new Label("Cards left: "+ this.game.theDealer.deckSize());
 
             //adjust the size
             leftBox = new VBox(curMoneyField, numRoundField, numWinField,userSideField, cardLeft);
@@ -241,38 +237,64 @@ public class GameScreen {
             curMoneyField.setPrefHeight(40);
             numWinField.setPrefHeight(40);
             userSideField.setPrefHeight(40);
-            curMoneyField.setFont(new Font(15));
-    		numRoundField.setFont(new Font(15));
-    		numWinField.setFont(new Font(15));
-    		userSideField.setFont(new Font(15));
-            cardLeft.setFont(new Font(15));
             cardLeft.setPrefHeight(40);
     		
     		// make the title Result bigger and center it
-    		result.setFont(new Font(35));
             result.setAlignment(Pos.CENTER);
+            result.setPrefHeight(100);
             
             // make the label player and banker bigger
-            playerLabel.setFont(new Font(35));
-            bankerLabel.setFont(new Font(35));
             playerStat.setMargin(playerScore, new Insets(0, 0, 20, 0));
             bankerStat.setMargin(bankerScore, new Insets(0, 0, 20, 0));   
             
             // make the line always in the center of the gameStats
-            
-            // make the text Deal and Next button bigger
-            dealButton.setFont(new Font(20));
-            nextButton.setFont(new Font(20));
+
+
+            Insets padding = new Insets(0,0,5,5);
+            curMoneyField.setPadding(padding);
+            numRoundField.setPadding(padding);
+            numWinField.setPadding(padding);
+            cardLeft.setPadding(padding);
+
+            fontUI();
+            colorUI();
                
         }
         
-//        void colorUI() {
-//        	
-//        }
+        void colorUI() {
+            curMoneyField.setTextFill(Color.YELLOW);
+            numRoundField.setTextFill(Color.WHITE);
+            cardLeft.setTextFill(Color.WHITE);
+            numWinField.setTextFill(Color.WHITE);
+            userSideField.setTextFill(Color.WHITE);
+
+            result.setTextFill(Color.WHITE);
+            playerLabel.setTextFill(Color.WHITE);
+            bankerLabel.setTextFill(Color.WHITE);
+            playerScore.setTextFill(Color.WHITE);
+            bankerScore.setTextFill(Color.WHITE);
+
+            dealButton.setStyle("-fx-base: #027833;");
+            nextButton.setStyle("-fx-base: #027833;");
+        }
 //        
-//        void fontUI() {
-//        	        	
-//        }
+        void fontUI() {
+            curMoneyField.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, FontPosture.REGULAR,15));
+            numRoundField.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, FontPosture.REGULAR,15));
+            numWinField.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, FontPosture.REGULAR,15));
+            cardLeft.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, FontPosture.REGULAR,15));
+            userSideField.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, FontPosture.REGULAR,15));
+
+            result.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, FontPosture.REGULAR,40));
+            playerLabel.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, FontPosture.REGULAR,35));
+            bankerLabel.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, FontPosture.REGULAR,35));
+            playerScore.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, FontPosture.REGULAR,20));
+            bankerScore.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, FontPosture.REGULAR,20));
+
+            dealButton.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, FontPosture.REGULAR,25));
+            nextButton.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, FontPosture.REGULAR,25));
+
+        }
         
     }
 

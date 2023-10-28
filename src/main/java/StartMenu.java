@@ -11,6 +11,10 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -57,10 +61,22 @@ public  class StartMenu {
         VBox box3 = new VBox(startButton);
 
         // set the font size
-        title.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 40));
-        author.setFont(Font.font("verdana", FontWeight.MEDIUM, FontPosture.REGULAR, 20));
-        author2.setFont(Font.font("verdana", FontWeight.MEDIUM, FontPosture.REGULAR, 20));
-        startButton.setFont(Font.font("Robotic", FontWeight.BOLD, FontPosture.REGULAR, 40));
+
+        title.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, FontPosture.REGULAR, 80));
+        author.setFont(Font.font("Comic Sans MS", FontWeight.LIGHT, FontPosture.REGULAR, 20));
+        author2.setFont(Font.font("Comic Sans MS", FontWeight.LIGHT, FontPosture.REGULAR, 20));
+        startButton.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, FontPosture.REGULAR, 40));
+
+        Stop[] titleStop = new Stop[] {new  Stop(0,Color.YELLOWGREEN), new Stop(.5, Color.GREEN), new Stop(1, Color.WHITESMOKE)};
+        LinearGradient titleLG = new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE, titleStop);
+        title.setTextFill(titleLG);
+        author.setTextFill(Color.WHITESMOKE);
+        author2.setTextFill(Color.WHITESMOKE);
+
+        Stop[] startStop = new Stop[] {new  Stop(0,Color.WHITESMOKE), new Stop(.5, Color.YELLOWGREEN), new Stop(1, Color.WHITESMOKE)};
+        LinearGradient StartLG = new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE, startStop);
+        startButton.setTextFill(StartLG);
+        startButton.setStyle("-fx-base: #027833;");
         startButton.setPrefSize(200,100);
 
         words = new VBox(menuBox,box2,box3); // put everything inside the root node
