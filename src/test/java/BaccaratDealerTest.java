@@ -35,13 +35,13 @@ public class BaccaratDealerTest {
         int spade = 0;
         for(Card i : newDealer.deck) {
 
-            if(i.suite.equals("Heart")){
+            if(i.suite.equals("heart")){
                 heart++;
-            } else if(i.suite.equals("Diamond")) {
+            } else if(i.suite.equals("diamond")) {
                 diamond++;
-            } else if(i.suite.equals("Spade")) {
+            } else if(i.suite.equals("spade")) {
                 spade++;
-            } else if(i.suite.equals("Club")) {
+            } else if(i.suite.equals("club")) {
                 club++;
             }
         }
