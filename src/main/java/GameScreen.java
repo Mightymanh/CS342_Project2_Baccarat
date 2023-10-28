@@ -43,6 +43,7 @@ public class GameScreen {
         HBox bankerCards;
         Label bankerScore;
         HBox gameStats;
+        VBox lineBox;
         
         Line line;
 
@@ -67,7 +68,8 @@ public class GameScreen {
             });
 
             nextButton.setOnAction((e)->{
-            	if (game.currentMoney == 0) {
+            	// Game Over when user runs out of money or we do not have enough card to continue the game
+            	if (game.currentMoney == 0 || this.game.theDealer.deckSize() < 6) {
             		if (result.getText() == "Game Over") {
             			StartMenu newStart = new StartMenu(game);
             			game.reset();
@@ -116,7 +118,7 @@ public class GameScreen {
         // add cards to the screen
         public  void addCard(int side, Card curCard) throws FileNotFoundException {
         	ImageView imageView = new ImageView(curCard.image);
-        	imageView.setFitHeight(130);
+        	imageView.setFitHeight(110);
         	imageView.setPreserveRatio(true);
         	
             // 0 means player, 1 means banker
@@ -167,6 +169,7 @@ public class GameScreen {
             line.setStartY(20);
             line.setEndY(250);
             line.setStrokeWidth(4);
+            lineBox = new VBox(line);
             
             
             playerCards = new HBox();
@@ -176,12 +179,8 @@ public class GameScreen {
             playerLabel = new Label("Player");
             bankerLabel = new Label("Banker");
             playerStat =  new VBox(playerLabel, playerScore, playerCards);
-            playerStat.setAlignment(Pos.CENTER);
-            playerStat.setPrefWidth(350);
             bankerStat =  new VBox(bankerLabel, bankerScore,bankerCards);
-            bankerStat.setAlignment(Pos.CENTER);
-            bankerStat.setPrefWidth(350);
-            gameStats = new HBox(playerStat, line, bankerStat);
+            gameStats = new HBox(playerStat, lineBox, bankerStat);
             gameStats.setSpacing(100);
             gameStats.setMinHeight(300);
             gameStats.setAlignment(Pos.CENTER);
@@ -203,6 +202,12 @@ public class GameScreen {
             leftBox.setPrefWidth(160);
         	middleBox.setPrefWidth(750);
         	mb.setPrefWidth(90);
+        	playerStat.setPrefWidth(370);
+        	bankerStat.setPrefWidth(370);
+        	lineBox.setPrefWidth(10);
+            playerStat.setAlignment(Pos.CENTER);
+            bankerStat.setAlignment(Pos.CENTER);
+            lineBox.setAlignment(Pos.CENTER);
         	
         	// center all children inside middleBox
         	middleBox.setAlignment(Pos.CENTER);
@@ -233,8 +238,8 @@ public class GameScreen {
             // make the label player and banker bigger
             playerLabel.setFont(new Font(35));
             bankerLabel.setFont(new Font(35));
-            playerStat.setMargin(playerScore, new Insets(0, 0, 10, 0));
-            bankerStat.setMargin(bankerScore, new Insets(0, 0, 10, 0));   
+            playerStat.setMargin(playerScore, new Insets(0, 0, 20, 0));
+            bankerStat.setMargin(bankerScore, new Insets(0, 0, 20, 0));   
             
             // make the line always in the center of the gameStats
             

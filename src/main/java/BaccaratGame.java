@@ -137,6 +137,7 @@ public class BaccaratGame extends Application {
 
 	// show the winner and end the game
 	public void endGame(GameScreen screen) {
+		
 		this.currentMoney+= this.evaluateWinnings();
 
 		screen.dealButton.setDisable(true);
@@ -151,7 +152,7 @@ public class BaccaratGame extends Application {
 		screen.numWinField.setText("Rounds won: " + this.numWins);
 		//curWinning.setDisable(true);
 		screen.numRoundField.setText("Rounds played: " + this.numRounds);
-		screen.curMoneyField.setText("Your money $"+this.currentMoney);
+		screen.curMoneyField.setText("Your money: $"+this.currentMoney);
 		screen.nextButton.setDisable(false);
 		this.curPhase = 0;
 	}
@@ -163,6 +164,7 @@ public class BaccaratGame extends Application {
 	 * 3rd Phase: check if bank can draw 3rd card. Then evavulate winner
 	 * */
 	public void gamePhase(GameScreen screen) throws FileNotFoundException {
+		System.out.println("current phase: " + this.curPhase);
 		// 1st phase
 		if (this.curPhase==0) {
 			// deal the first 2 cards
@@ -190,14 +192,15 @@ public class BaccaratGame extends Application {
 				this.playerThirdCard = this.theDealer.drawOne();
 				this.playerHand.add(this.playerThirdCard);
 				screen.addCard(0,this.playerThirdCard);
+				this.curPhase++;
 
 			} else if (!this.gameLogic.evaluateBankerDraw(this.bankerHand,playerThirdCard)) {
 				endGame(screen);
 			} else {
 				screen.result.setText("Player cannot draw a card\nPress the Deal Button again");
+				this.curPhase++;
 			}
 			screen.updateScore();
-			this.curPhase++;
 		} else if (this.curPhase == 2) { // third phase
 			if (this.gameLogic.evaluateBankerDraw(this.bankerHand,this.playerThirdCard)) {
 				this.bankerHand.add(this.theDealer.drawOne());

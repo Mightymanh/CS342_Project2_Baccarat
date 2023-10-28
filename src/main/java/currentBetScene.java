@@ -71,7 +71,7 @@ public class currentBetScene {
 		
 		// init TextField
 		betAmountField = new TextField();
-		betAmountField.setPromptText("Enter the amount you want to bet");
+		betAmountField.setPromptText("Enter the amount you want to bet as integer");
 		userMoneyField = new TextField("Your money: $" + game.currentMoney);
 		userMoneyField.setEditable(false);
 		numRoundField = new TextField("Rounds played: " + game.numRounds);
@@ -137,17 +137,25 @@ public class currentBetScene {
 		
 		// if user press confirm, set the current bet money, set the option, then go to the next scene
 		confirmButton.setOnAction((ActionEvent e) -> {
+				// if user type non digit characters then decline the input
 				try {
 					game.currentBet = Integer.parseInt(betAmountField.getText());
 				} catch (Exception error) {
-					lb1.setText("Must be Valid bet Amount");
+					lb1.setText("Must be valid bet amount\n Make sure that you input an interger");
 					return;
 				}
 				
+				// if user bet more than what they have then decline the input
 				if (game.currentBet > game.currentMoney) {
 					lb1.setText("You bet more than you Have!");
 					return;
-				}	
+				}
+				
+				// if the user bet too few then decline the input
+				if (game.currentBet < 1) {
+					lb1.setText("You bet too few!\n Please bet at least $1");
+					return;
+				}
 				
 				game.currentMoney -= game.currentBet;
 				
