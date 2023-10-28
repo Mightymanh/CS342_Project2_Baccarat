@@ -223,7 +223,7 @@ public class GameScreen {
 
         private void decorateLayoutUI() {
         	// set the size for children in the root
-            leftBox.setPrefWidth(160);
+            leftBox.setPrefWidth(180);
         	middleBox.setPrefWidth(750);
         	mb.setPrefWidth(90);
         	playerStat.setPrefWidth(370);
