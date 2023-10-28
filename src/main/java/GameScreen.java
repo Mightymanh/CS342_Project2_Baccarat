@@ -1,3 +1,4 @@
+import javafx.animation.TranslateTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -18,6 +19,7 @@ import javafx.scene.paint.CycleMethod;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -133,6 +135,17 @@ public class GameScreen {
         	ImageView imageView = new ImageView(curCard.image);
         	imageView.setFitHeight(110);
         	imageView.setPreserveRatio(true);
+        	
+        	// animation
+        	TranslateTransition translate = new TranslateTransition(); 
+        	translate.setNode(imageView);
+        	translate.setFromX(-100);
+        	translate.setFromY(100);
+        	translate.setToX(0);
+        	translate.setToY(0);
+            translate.setDuration(Duration.seconds(1));
+            translate.play();
+        	
         	
             // 0 means player, 1 means banker
             if (side == 0 ) {
