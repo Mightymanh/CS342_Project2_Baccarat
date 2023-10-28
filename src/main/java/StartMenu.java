@@ -3,6 +3,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -66,6 +72,15 @@ public  class StartMenu {
         words.setAlignment(Pos.TOP_CENTER);
 
         addEvents();
+        
+        
+        // add background image
+        Image img = new Image(getClass().getClassLoader().getResource("background.jpeg").toExternalForm());
+        BackgroundImage backgroundImg = new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                new BackgroundSize(530, 400, true, true, true, true));
+        Background background = new Background(backgroundImg);
+        words.setBackground(background);
+        
         startScene = new Scene(words, 700, 700);
 
     }

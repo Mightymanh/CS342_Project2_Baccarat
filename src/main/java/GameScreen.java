@@ -5,6 +5,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -107,6 +112,12 @@ public class GameScreen {
             initPrivateVar();
         
             addEvents();
+            
+            Image img = new Image(getClass().getClassLoader().getResource("background.jpeg").toExternalForm());
+            BackgroundImage backgroundImg = new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                    new BackgroundSize(530, 400, true, true, true, true));
+            Background background = new Background(backgroundImg);
+            root.setBackground(background);
 
             gameScene = new Scene(root,1000,600);
         }
