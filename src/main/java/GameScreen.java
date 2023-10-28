@@ -169,7 +169,7 @@ public class GameScreen {
             numWinField = new Label("Rounds won: "+ this.game.numWins);
             numRoundField = new Label("Rounds played: "+this.game.numRounds);
             curMoneyField = new Label("Your money: $"+this.game.currentMoney);
-            userSideField = new Label("Picked side: "+this.game.userChoice);
+            userSideField = new Label(" Picked side: "+this.game.userChoice);
             cardLeft = new Label("Cards left: "+ this.game.theDealer.deckSize());
 
             //adjust the size

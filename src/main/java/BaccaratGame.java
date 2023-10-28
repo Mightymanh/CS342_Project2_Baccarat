@@ -164,7 +164,6 @@ public class BaccaratGame extends Application {
 	 * 3rd Phase: check if bank can draw 3rd card. Then evavulate winner
 	 * */
 	public void gamePhase(GameScreen screen) throws FileNotFoundException {
-		System.out.println("current phase: " + this.curPhase);
 		// 1st phase
 		if (this.curPhase==0) {
 			// deal the first 2 cards

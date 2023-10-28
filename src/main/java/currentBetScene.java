@@ -155,6 +155,12 @@ public class currentBetScene {
 					return;
 				}
 				
+				// if the user has not chosen a side then decline the confirm
+				if (game.userChoice == "N/A") {
+					lb2.setText("You must pick a Side!");
+					return;
+				}
+				
 				game.currentMoney -= game.currentBet;
 				
 				userMoneyField.setText("Your money: $" + game.currentMoney);
