@@ -9,6 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -30,6 +31,7 @@ public class GameScreen {
         TextField numRoundField;
         TextField curMoneyField;
         TextField userSideField;
+        TextField cardLeft;
         Button nextButton;
         Button dealButton;
         MenuBar mb;
@@ -132,6 +134,7 @@ public class GameScreen {
         public void updateScore() {
             playerScore.setText("Score: " + game.gameLogic.handTotal(game.playerHand));
             bankerScore.setText("Score: " + game.gameLogic.handTotal(game.bankerHand));
+            cardLeft.setText("Cards left: "+ this.game.theDealer.deckSize());
         }
 
         // initialze all the UI to the left of the screen
@@ -141,15 +144,16 @@ public class GameScreen {
             numRoundField = new TextField("Rounds played: "+this.game.numRounds);
             curMoneyField = new TextField("Your money: $"+this.game.currentMoney);
             userSideField = new TextField("Picked side: "+this.game.userChoice);
-
+            cardLeft = new TextField("Cards left: "+ this.game.theDealer.deckSize());
             // make them uneditable
             numRoundField.setEditable(false);
             curMoneyField.setEditable(false);
             numWinField.setEditable(false);
             userSideField.setEditable(false);
+            cardLeft.setEditable(false);
 
             //adjust the size
-            leftBox = new VBox(curMoneyField, numRoundField, numWinField,userSideField);
+            leftBox = new VBox(curMoneyField, numRoundField, numWinField,userSideField, cardLeft);
             //leftBox.setAlignment(Pos.TOP_LEFT);
         }
 
@@ -230,6 +234,8 @@ public class GameScreen {
     		numRoundField.setFont(new Font(15));
     		numWinField.setFont(new Font(15));
     		userSideField.setFont(new Font(15));
+            cardLeft.setFont(new Font(15));
+            cardLeft.setPrefHeight(40);
     		
     		// make the title Result bigger and center it
     		result.setFont(new Font(35));

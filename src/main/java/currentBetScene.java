@@ -43,6 +43,7 @@ public class currentBetScene {
 	private TextField userMoneyField;
 	private TextField numRoundField;
 	private TextField numWinField;
+	private TextField cardLeft;
 	private MenuBar mb;
 	
 	// UI layout
@@ -78,6 +79,8 @@ public class currentBetScene {
 		numRoundField.setEditable(false);
 		numWinField = new TextField("Rounds won: " + game.numWins);
 		numWinField.setEditable(false);
+		cardLeft = new TextField("Cards left: " + game.theDealer.deck.size());
+		cardLeft.setEditable(false);
 		
 		// init menu options
 		OptionBar newOptionBar = new OptionBar(this.game);
@@ -88,7 +91,7 @@ public class currentBetScene {
 		betFieldBox = new HBox(betAmountField);
 		confirmBox = new HBox(confirmButton);
 		choiceRow = new HBox(b1, b2, b3);
-		gameStats = new VBox(userMoneyField, numRoundField, numWinField);
+		gameStats = new VBox(userMoneyField, numRoundField, numWinField, cardLeft);
 		mainPage = new VBox(lb1, betFieldBox, lb2, choiceRow, confirmButton);
 		root = new HBox(gameStats, mainPage, mb);
 	}
@@ -226,6 +229,7 @@ public class currentBetScene {
 		userMoneyField.setPrefHeight(40);
 		numRoundField.setPrefHeight(40);
 		numWinField.setPrefHeight(40);
+		cardLeft.setPrefHeight(40);
 		
 	}
 	
@@ -255,6 +259,7 @@ public class currentBetScene {
 		userMoneyField.setFont(new Font(15));
 		numRoundField.setFont(new Font(15));
 		numWinField.setFont(new Font(15));
+		cardLeft.setFont(new Font(15));
 		
 	}
 	
